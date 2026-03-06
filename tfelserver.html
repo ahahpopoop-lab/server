@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FALCONS ARAB RP</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --gold:#FFD700;--gold2:#FFC200;--goldd:#B8960C;
+  --bg:#0a0a0a;--card:#111;--input:#1a1a1a;--input2:#202020;
+  --border:#2a2a2a;--text:#f0f0f0;--muted:#777;
+}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+
+body::before{content:'';position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,215,0,.012) 2px,rgba(255,215,0,.012) 4px);pointer-events:none;z-index:0;}
+
+.glow-bg{position:fixed;top:-200px;left:50%;transform:translateX(-50%);width:700px;height:400px;background:radial-gradient(ellipse,rgba(255,215,0,.07) 0%,transparent 70%);pointer-events:none;z-index:0;animation:glowP 4s ease-in-out infinite;}
+@keyframes glowP{0%,100%{opacity:.6;transform:translateX(-50%) scale(1);}50%{opacity:1;transform:translateX(-50%) scale(1.1);}}
+
+.pts{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
+.p{position:absolute;border-radius:50%;background:var(--gold);animation:rise linear infinite;opacity:0;}
+@keyframes rise{0%{transform:translateY(110vh) scale(0);opacity:0;}10%{opacity:.7;}90%{opacity:.2;}100%{transform:translateY(-10vh) scale(1);opacity:0;}}
+
+.page{position:relative;z-index:1;min-height:100vh;display:none;flex-direction:column;align-items:center;}
+.page.active{display:flex;}
+
+/* ===== LANDING ===== */
+#landing{justify-content:center;padding:30px 20px;}
+
+.eagle{font-size:70px;display:block;text-align:center;animation:eagleBob 3s ease-in-out infinite;filter:drop-shadow(0 0 25px rgba(255,215,0,.6));margin-bottom:6px;}
+@keyframes eagleBob{0%,100%{transform:translateY(0) rotate(-3deg);}50%{transform:translateY(-8px) rotate(3deg);}}
+
+.site-title{font-size:clamp(28px,9vw,52px);font-weight:900;background:linear-gradient(135deg,#ffe066 0%,#ffd700 45%,#b8860b 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;letter-spacing:3px;text-align:center;animation:shimmer 5s ease-in-out infinite;background-size:200%;}
+@keyframes shimmer{0%,100%{background-position:0% 50%;}50%{background-position:100% 50%;}}
+
+.site-sub{font-size:12px;color:var(--muted);letter-spacing:5px;text-align:center;margin-top:4px;}
+
+.divider{width:160px;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);margin:18px auto 40px;animation:divG 2s ease-in-out infinite;}
+@keyframes divG{0%,100%{opacity:.5;}50%{opacity:1;box-shadow:0 0 12px var(--gold);}}
+
+.choices{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;width:100%;max-width:620px;}
+
+.cbtn{flex:1;min-width:260px;max-width:290px;background:var(--card);border-radius:20px;padding:36px 24px;cursor:pointer;text-align:center;position:relative;overflow:hidden;transition:transform .35s cubic-bezier(.175,.885,.32,1.275),box-shadow .35s;border:2px solid transparent;animation:cardIn .6s ease both;}
+@keyframes cardIn{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+.cbtn:first-child{animation-delay:.1s;}
+.cbtn:last-child{animation-delay:.22s;}
+
+.cbtn::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity .3s;}
+.cbtn:hover{transform:translateY(-10px) scale(1.03);}
+.cbtn:hover::before{opacity:1;}
+
+.cbtn::after{content:'';position:absolute;top:0;left:15%;right:15%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:0;transition:opacity .3s;}
+.cbtn:hover::after{opacity:1;}
+
+.cbtn-admin{border-color:rgba(255,215,0,.35);box-shadow:0 0 30px rgba(255,215,0,.06);}
+.cbtn-admin::before{background:radial-gradient(ellipse at center,rgba(255,215,0,.07) 0%,transparent 70%);}
+.cbtn-admin:hover{border-color:var(--gold);box-shadow:0 20px 60px rgba(255,215,0,.2);}
+
+.cbtn-act{border-color:rgba(255,107,0,.3);box-shadow:0 0 30px rgba(255,107,0,.05);}
+.cbtn-act::before{background:radial-gradient(ellipse at center,rgba(255,107,0,.07) 0%,transparent 70%);}
+.cbtn-act:hover{border-color:#ff6b00;box-shadow:0 20px 60px rgba(255,107,0,.17);}
+
+.cbtn-icon{font-size:54px;display:block;margin-bottom:14px;animation:iconF 3s ease-in-out infinite;}
+@keyframes iconF{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+
+.cbtn-title{font-size:20px;font-weight:900;display:block;margin-bottom:8px;}
+.cbtn-admin .cbtn-title{color:var(--gold);}
+.cbtn-act   .cbtn-title{color:#ff8c00;}
+
+.cbtn-desc{font-size:13px;color:var(--muted);line-height:1.7;}
+.cbtn-arrow{display:inline-block;margin-top:14px;font-size:20px;transition:transform .3s;color:var(--muted);}
+.cbtn:hover .cbtn-arrow{transform:translateX(-8px);}
+
+/* ===== INNER PAGES ===== */
+.inner{width:100%;max-width:520px;padding:36px 20px 60px;}
+
+.pg-header{display:flex;align-items:center;gap:14px;margin-bottom:30px;padding-bottom:16px;border-bottom:1px solid rgba(255,215,0,.1);}
+
+.back-btn{background:rgba(255,215,0,.07);border:1px solid rgba(255,215,0,.2);color:var(--gold);padding:10px 18px;border-radius:10px;cursor:pointer;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;transition:all .3s;white-space:nowrap;}
+.back-btn:hover{background:rgba(255,215,0,.15);border-color:var(--gold);}
+
+.pg-title{font-size:clamp(17px,5vw,24px);font-weight:900;color:var(--gold);}
+
+.card{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px 24px;box-shadow:0 0 60px rgba(0,0,0,.8);position:relative;overflow:hidden;}
+.card::before{content:'';position:absolute;top:0;left:10%;right:10%;height:2px;background:linear-gradient(90deg,transparent,var(--gold),transparent);border-radius:2px;animation:divG 3s ease-in-out infinite;}
+
+.card-title{font-size:clamp(16px,4vw,21px);font-weight:900;color:var(--gold);text-align:center;margin-bottom:24px;}
+.card-title::after{content:'';display:block;width:50px;height:2px;background:linear-gradient(90deg,var(--gold),transparent);margin:7px auto 0;border-radius:2px;}
+
+.field{margin-bottom:17px;animation:fieldIn .5s ease both;}
+@keyframes fieldIn{from{opacity:0;transform:translateX(18px);}to{opacity:1;transform:translateX(0);}}
+
+label{display:block;font-size:15px;font-weight:700;color:var(--gold);margin-bottom:7px;text-align:right;}
+label.wh{color:#bbb;font-weight:600;}
+
+input,textarea{width:100%;background:var(--input);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-family:'Cairo',sans-serif;font-size:15px;padding:13px 15px;outline:none;transition:border-color .3s,background .3s,box-shadow .3s;direction:rtl;}
+input::placeholder,textarea::placeholder{color:#3a3a3a;}
+input:focus,textarea:focus{border-color:var(--gold);background:var(--input2);box-shadow:0 0 0 3px rgba(255,215,0,.11);}
+textarea{resize:vertical;min-height:95px;}
+
+.hint{font-size:11px;color:#555;margin-top:5px;text-align:right;}
+.req{color:#ff4444;margin-right:2px;}
+
+.sub-btn{width:100%;padding:15px;background:var(--gold);color:#000;border:none;border-radius:12px;font-family:'Cairo',sans-serif;font-size:18px;font-weight:900;cursor:pointer;margin-top:8px;position:relative;overflow:hidden;transition:transform .2s,box-shadow .3s;}
+.sub-btn::before{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.3),transparent);transition:left .5s;}
+.sub-btn:hover::before{left:100%;}
+.sub-btn:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(255,215,0,.45);}
+.sub-btn:active{transform:scale(.97);}
+
+/* success */
+.suc{display:none;position:fixed;inset:0;background:rgba(0,0,0,.93);z-index:999;align-items:center;justify-content:center;flex-direction:column;text-align:center;padding:30px;}
+.suc.show{display:flex;animation:fadeIn .4s ease;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+.suc-icon{font-size:80px;animation:popIn .6s cubic-bezier(.175,.885,.32,1.275) both;filter:drop-shadow(0 0 30px rgba(255,215,0,.8));}
+@keyframes popIn{from{transform:scale(0) rotate(-20deg);opacity:0;}to{transform:scale(1) rotate(0);opacity:1;}}
+.suc-title{font-size:26px;font-weight:900;color:var(--gold);margin:18px 0 8px;}
+.suc-msg{color:#999;font-size:15px;max-width:300px;line-height:1.7;}
+.suc-close{margin-top:28px;background:var(--gold);color:#000;border:none;padding:13px 38px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:17px;font-weight:900;cursor:pointer;transition:box-shadow .3s,transform .2s;}
+.suc-close:hover{box-shadow:0 6px 24px rgba(255,215,0,.5);transform:translateY(-2px);}
+
+.conf-box{position:fixed;inset:0;pointer-events:none;z-index:1000;}
+.cf{position:absolute;animation:cfFall 2s ease-in both;}
+@keyframes cfFall{from{transform:translateY(-30px) rotate(0);opacity:1;}to{transform:translateY(110vh) rotate(720deg);opacity:0;}}
+
+.footer{text-align:center;margin-top:28px;font-size:12px;color:#333;}
+
+.discord-btn{margin-top:22px;background:#5865F2;color:#fff;padding:14px 34px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:17px;font-weight:900;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:10px;transition:box-shadow .3s,transform .2s;box-shadow:0 4px 20px rgba(88,101,242,.4);}
+.discord-btn:hover{transform:translateY(-2px);box-shadow:0 8px 28px rgba(88,101,242,.6);}
+.suc-close{margin-top:10px;background:transparent;color:#555;border:1px solid #333;padding:10px 28px;border-radius:12px;font-family:'Cairo',sans-serif;font-size:14px;font-weight:700;cursor:pointer;transition:color .3s;}
+.suc-close:hover{color:#aaa;}
+</style>
+</head>
+<body>
+
+<div class="glow-bg"></div>
+<div class="pts" id="pts"></div>
+
+<!-- SUCCESS -->
+<div class="suc" id="suc">
+  <div class="conf-box" id="confBox"></div>
+  <div class="suc-icon">🦅</div>
+  <div class="suc-title" id="sucTitle"></div>
+  <div class="suc-msg"  id="sucMsg"></div>
+  <a href="https://discord.gg/b3ruzuPTh" target="_blank" class="discord-btn">
+    <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M20.317 4.37a19.791 19.791 0 0 0-4.885-1.515.074.074 0 0 0-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 0 0-5.487 0 12.64 12.64 0 0 0-.617-1.25.077.077 0 0 0-.079-.037A19.736 19.736 0 0 0 3.677 4.37a.07.07 0 0 0-.032.027C.533 9.046-.32 13.58.099 18.057c.001.022.015.04.037.05a19.9 19.9 0 0 0 5.993 3.03.078.078 0 0 0 .084-.028 14.09 14.09 0 0 0 1.226-1.994.076.076 0 0 0-.041-.106 13.107 13.107 0 0 1-1.872-.892.077.077 0 0 1-.008-.128 10.2 10.2 0 0 0 .372-.292.074.074 0 0 1 .077-.01c3.928 1.793 8.18 1.793 12.062 0a.074.074 0 0 1 .078.01c.12.098.246.198.373.292a.077.077 0 0 1-.006.127 12.299 12.299 0 0 1-1.873.892.077.077 0 0 0-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 0 0 .084.028 19.839 19.839 0 0 0 6.002-3.03.077.077 0 0 0 .037-.05c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 0 0-.031-.03z"/></svg>
+    انضم للديسكورد
+  </a>
+  <button class="suc-close" onclick="closeSuc()">العودة</button>
+</div>
+
+<!-- ===== LANDING ===== -->
+<div class="page active" id="landing">
+  <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:30px 20px;width:100%;">
+    <span class="eagle">🦅</span>
+    <div class="site-title">FALCONS ARAB RP</div>
+    <div class="site-sub">السيرفر العربي الأول للتمثيل</div>
+    <div class="divider"></div>
+
+    <div class="choices">
+      <div class="cbtn cbtn-admin" onclick="show('admin')">
+        <span class="cbtn-icon">👑</span>
+        <span class="cbtn-title">تقديم إدارة</span>
+        <p class="cbtn-desc">قدّم طلبك للانضمام إلى فريق إدارة السيرفر</p>
+        <span class="cbtn-arrow">←</span>
+      </div>
+      <div class="cbtn cbtn-act" onclick="show('activate')">
+        <span class="cbtn-icon">✅</span>
+        <span class="cbtn-title">تقديم تفعيل</span>
+        <p class="cbtn-desc">فعّل حسابك وابدأ رحلتك في عالم FALCONS</p>
+        <span class="cbtn-arrow">←</span>
+      </div>
+    </div>
+
+    <div class="footer" style="margin-top:50px;">جميع الحقوق محفوظة © 2025 FALCONS ARAB RP</div>
+  </div>
+</div>
+
+<!-- ===== تقديم إدارة ===== -->
+<div class="page" id="admin">
+  <div class="inner">
+    <div class="pg-header">
+      <button class="back-btn" onclick="show('landing')">← رجوع</button>
+      <span class="pg-title">👑 تقديم إدارة</span>
+    </div>
+    <div class="card">
+      <div class="card-title">نموذج التقديم للإدارة</div>
+
+      <div class="field" style="animation-delay:.06s">
+        <label>الاسم الكامل <span class="req">*</span></label>
+        <input type="text" id="a-name" placeholder="أدخل اسمك الكامل">
+      </div>
+      <div class="field" style="animation-delay:.12s">
+        <label>العمر <span class="req">*</span></label>
+        <input type="number" id="a-age" placeholder="مثال: 20" min="13" max="99">
+      </div>
+      <div class="field" style="animation-delay:.18s">
+        <label>اسم المستخدم (User) <span class="req">*</span></label>
+        <input type="text" id="a-user" placeholder="اسم اللاعب في SA-MP">
+      </div>
+      <div class="field" style="animation-delay:.24s">
+        <label>آيدي الديسكورد (ID) <span class="req">*</span></label>
+        <input type="text" id="a-did" placeholder="مثال: 123456789012345678">
+        <div class="hint">الإعدادات ← المظهر ← وضع المطور</div>
+      </div>
+      <div class="field" style="animation-delay:.30s">
+        <label class="wh">اسم مستخدم الديسكورد <span style="font-size:12px;color:#444">(اختياري)</span></label>
+        <input type="text" id="a-duser" placeholder="مثال: falcons#0001">
+      </div>
+      <div class="field" style="animation-delay:.36s">
+        <label>الخبرة السابقة <span class="req">*</span></label>
+        <textarea id="a-exp" placeholder="اكتب خبرتك في سيرفرات SA-MP أو الإدارة..."></textarea>
+      </div>
+      <div class="field" style="animation-delay:.42s">
+        <label>لماذا تريد الانضمام للإدارة؟ <span class="req">*</span></label>
+        <textarea id="a-reason" placeholder="اكتب سبب رغبتك في الانضمام..."></textarea>
+      </div>
+
+      <button class="sub-btn" onclick="submitForm('admin')">👑 &nbsp; تقديم الطلب</button>
+    </div>
+    <div class="footer">جميع الحقوق محفوظة © 2025 FALCONS ARAB RP</div>
+  </div>
+</div>
+
+<!-- ===== تقديم تفعيل ===== -->
+<div class="page" id="activate">
+  <div class="inner">
+    <div class="pg-header">
+      <button class="back-btn" onclick="show('landing')">← رجوع</button>
+      <span class="pg-title">✅ تقديم تفعيل</span>
+    </div>
+    <div class="card">
+      <div class="card-title">نموذج تفعيل الحساب</div>
+
+      <div class="field" style="animation-delay:.06s">
+        <label>الاسم الكامل <span class="req">*</span></label>
+        <input type="text" id="v-name" placeholder="أدخل اسمك الكامل">
+      </div>
+      <div class="field" style="animation-delay:.12s">
+        <label>العمر <span class="req">*</span></label>
+        <input type="number" id="v-age" placeholder="مثال: 20" min="13" max="99">
+      </div>
+      <div class="field" style="animation-delay:.18s">
+        <label>اسم المستخدم (User) <span class="req">*</span></label>
+        <input type="text" id="v-user" placeholder="اسم اللاعب في SA-MP">
+      </div>
+      <div class="field" style="animation-delay:.24s">
+        <label>آيدي الديسكورد (ID) <span class="req">*</span></label>
+        <input type="text" id="v-did" placeholder="مثال: 123456789012345678">
+        <div class="hint">الإعدادات ← المظهر ← وضع المطور</div>
+      </div>
+      <div class="field" style="animation-delay:.30s">
+        <label class="wh">اسم مستخدم الديسكورد <span style="font-size:12px;color:#444">(اختياري)</span></label>
+        <input type="text" id="v-duser" placeholder="مثال: falcons#0001">
+      </div>
+      <div class="field" style="animation-delay:.36s">
+        <label>سبب طلب التفعيل <span class="req">*</span></label>
+        <textarea id="v-reason" placeholder="اكتب سبب رغبتك في الانضمام للسيرفر..."></textarea>
+      </div>
+
+      <button class="sub-btn" onclick="submitForm('activate')">✅ &nbsp; تقديم الطلب</button>
+    </div>
+    <div class="footer">جميع الحقوق محفوظة © 2025 FALCONS ARAB RP</div>
+  </div>
+</div>
+
+<script>
+/* particles */
+const pts=document.getElementById('pts');
+for(let i=0;i<28;i++){
+  const d=document.createElement('div');d.className='p';
+  const s=Math.random()*4+1;
+  d.style.cssText=`left:${Math.random()*100}%;width:${s}px;height:${s}px;animation-duration:${Math.random()*18+10}s;animation-delay:${Math.random()*12}s;`;
+  pts.appendChild(d);
+}
+
+/* navigation */
+function show(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+/* forms validation */
+const forms={
+  admin:[
+    {id:'a-name'},{id:'a-age'},{id:'a-user'},{id:'a-did'},{id:'a-exp'},{id:'a-reason'}
+  ],
+  activate:[
+    {id:'v-name'},{id:'v-age'},{id:'v-user'},{id:'v-did'},{id:'v-reason'}
+  ]
+};
+
+async function submitForm(type){
+  for(const f of forms[type]){
+    const el=document.getElementById(f.id);
+    if(!el.value.trim()){
+      el.focus();
+      el.style.borderColor='#ff4444';
+      el.style.boxShadow='0 0 0 3px rgba(255,68,68,.15)';
+      setTimeout(()=>{el.style.borderColor='';el.style.boxShadow='';},2000);
+      el.animate([
+        {transform:'translateX(0)'},{transform:'translateX(-7px)'},
+        {transform:'translateX(7px)'},{transform:'translateX(-4px)'},
+        {transform:'translateX(4px)'},{transform:'translateX(0)'}
+      ],{duration:380,easing:'ease'});
+      return;
+    }
+  }
+
+  const btn = document.querySelector(`#${type==='admin'?'admin':'activate'} .sub-btn`);
+  btn.textContent = '⏳ جاري الإرسال...';
+  btn.disabled = true;
+
+  let webhook, embed;
+  const now = new Date().toLocaleString('ar-SA');
+
+  if(type === 'activate'){
+    const name   = document.getElementById('v-name').value.trim();
+    const age    = document.getElementById('v-age').value.trim();
+    const user   = document.getElementById('v-user').value.trim();
+    const did    = document.getElementById('v-did').value.trim();
+    const duser  = document.getElementById('v-duser').value.trim() || 'غير محدد';
+    const reason = document.getElementById('v-reason').value.trim();
+
+    webhook = 'https://discord.com/api/webhooks/1479597635135475772/BiZ7jENuDENXsH3fqSkijIdAh-X_uwz-58o7wcG-1mkXnkT7O4StEMvTfXxrmBhRKtIA';
+    embed = {
+      title: '🦅 طلب تفعيل جديد!',
+      color: 0xFFD700,
+      fields: [
+        { name: '👤 المعلومات الشخصية', value: `**الاسم الحقيقي:** ${name}\n**العمر الحقيقي:** ${age}`, inline: false },
+        { name: '💬 معلومات الديسكورد', value: `**اسم المستخدم:** ${duser}\n**الآيدي:** ${did}`, inline: false },
+        { name: '🎮 معلومات اللعبة', value: `**اليوزر:** ${user}`, inline: false },
+        { name: '❓ سبب اختيار السيرفر', value: reason, inline: false },
+      ],
+      footer: { text: `FALCONS ARAB RP • تم الإرسال في: ${now}` },
+      thumbnail: { url: 'https://i.imgur.com/AfFp7pu.png' }
+    };
+  } else {
+    const name   = document.getElementById('a-name').value.trim();
+    const age    = document.getElementById('a-age').value.trim();
+    const user   = document.getElementById('a-user').value.trim();
+    const did    = document.getElementById('a-did').value.trim();
+    const duser  = document.getElementById('a-duser').value.trim() || 'غير محدد';
+    const exp    = document.getElementById('a-exp').value.trim();
+    const reason = document.getElementById('a-reason').value.trim();
+
+    webhook = 'https://discord.com/api/webhooks/1479598087512129610/mYw5qZC2Z1Zb4KiDmu-tHSBMab5leCHx4Q_OnQe3gm5sfXmzDq4D3FvA17Pbn0OqivXy';
+    embed = {
+      title: '👑 طلب انضمام إدارة جديد!',
+      color: 0xFF8C00,
+      fields: [
+        { name: '👤 المعلومات الشخصية', value: `**الاسم الحقيقي:** ${name}\n**العمر الحقيقي:** ${age}`, inline: false },
+        { name: '💬 معلومات الديسكورد', value: `**اسم المستخدم:** ${duser}\n**الآيدي:** ${did}`, inline: false },
+        { name: '🎮 معلومات اللعبة', value: `**اليوزر:** ${user}`, inline: false },
+        { name: '📋 الخبرة السابقة', value: exp, inline: false },
+        { name: '❓ سبب الانضمام للإدارة', value: reason, inline: false },
+      ],
+      footer: { text: `FALCONS ARAB RP • تم الإرسال في: ${now}` },
+      thumbnail: { url: 'https://i.imgur.com/AfFp7pu.png' }
+    };
+  }
+
+  try {
+    await fetch(webhook, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        content: type==='activate' ? '@everyone 🔥 طلب تفعيل جديد!' : '@everyone 🔥 طلب انضمام إدارة جديد!',
+        embeds: [embed]
+      })
+    });
+  } catch(e) { console.error(e); }
+
+  btn.textContent = type==='admin' ? '👑 تقديم الطلب' : '✅ تقديم الطلب';
+  btn.disabled = false;
+
+  document.getElementById('sucTitle').textContent = type==='admin' ? 'تم تقديم طلب الإدارة! 👑' : 'تم تقديم طلب التفعيل! ✅';
+  document.getElementById('sucMsg').textContent = 'تم استلام طلبك بنجاح! سيتم تحويلك لديسكورد السيرفر...';
+  document.getElementById('suc').classList.add('show');
+  spawnConf();
+  setTimeout(()=>{ window.location.href='https://discord.gg/b3ruzuPTh'; }, 3000);
+}
+
+function closeSuc(){
+  document.getElementById('suc').classList.remove('show');
+  document.getElementById('confBox').innerHTML='';
+  ['a-name','a-age','a-user','a-did','a-duser','a-exp','a-reason',
+   'v-name','v-age','v-user','v-did','v-duser','v-reason'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.value='';
+  });
+}
+
+/* confetti */
+const cols=['#FFD700','#FFC200','#fff','#FF8C00','#FFE066'];
+function spawnConf(){
+  const box=document.getElementById('confBox');box.innerHTML='';
+  for(let i=0;i<60;i++){
+    const c=document.createElement('div');c.className='cf';
+    c.style.cssText=`left:${Math.random()*100}%;top:0;background:${cols[Math.floor(Math.random()*cols.length)]};width:${Math.random()*10+4}px;height:${Math.random()*10+4}px;border-radius:${Math.random()>.5?'50%':'3px'};animation-delay:${Math.random()}s;animation-duration:${Math.random()*1.5+1.5}s;`;
+    box.appendChild(c);
+  }
+}
+
+/* field scale on focus */
+document.querySelectorAll('input,textarea').forEach(el=>{
+  el.addEventListener('focus',()=>{const f=el.closest('.field');if(f){f.style.transform='scale(1.01)';f.style.transition='transform .2s';}});
+  el.addEventListener('blur', ()=>{const f=el.closest('.field');if(f)f.style.transform='scale(1)';});
+});
+</script>
+</body>
+</html>
